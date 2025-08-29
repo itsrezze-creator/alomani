@@ -3,225 +3,106 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tambah Server Minecraft Bedrock Otomatis</title>
-  <meta name="description" content="Kunjungi halaman ini untuk menambahkan server Minecraft Bedrock ke daftar Servers secara otomatis." />
+  <title>Mengarahkan ke Minecraft...</title>
+  <meta name="description" content="Otomatis mengarahkan ke Minecraft Bedrock untuk menambahkan server." />
   <style>
-    :root{--bg:#0b1220;--fg:#e7eefc;--muted:#9fb3d9;--card:#111a2e;--accent:#6aa6ff}
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{margin:0;display:grid;place-items:center;background:radial-gradient(1200px 600px at 10% 10%,#0e1a33,transparent),
-         radial-gradient(900px 500px at 90% 20%,#0b2440,transparent),var(--bg);color:var(--fg);font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif}
-    .card{width:min(680px,92vw);background:linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02));
-          border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:24px 22px;box-shadow:0 10px 30px rgba(6,12,24,.4)}
-    h1{margin:0 0 6px;font-size:clamp(20px,3vw,28px)}
-    p{margin:8px 0;color:var(--muted);line-height:1.5}
-    code{background:#0c1730;border:1px solid rgba(255,255,255,.08);padding:.25em .45em;border-radius:8px;color:#d6e4ff}
-    .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
-    .btn{appearance:none;cursor:pointer;border:1px solid rgba(255,255,255,.14);padding:12px 16px;border-radius:12px;font-weight:600;color:var(--fg);
-         background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02));
-         box-shadow:0 8px 20px rgba(0,0,0,.35);text-decoration:none;display:inline-flex;align-items:center;gap:8px}
-    .btn:hover{border-color:rgba(255,255,255,.22)}
-    .small{font-size:12px;opacity:.9}
-    .success{color:#b7ffbf}
-    .hidden{display:none}
+    body {
+      margin: 0;
+      padding: 0;
+      background: #0b1220;
+      color: #e7eefc;
+      font-family: system-ui, -apple-system, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .loading {
+      text-align: center;
+      opacity: 0.8;
+    }
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(255,255,255,0.1);
+      border-top: 3px solid #6aa6ff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 16px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
   </style>
 </head>
 <body>
-  <main class="card" role="main">
-    <h1>Menambahkan Server ke Minecraft Bedrock…</h1>
-    <p id="status">Jika tidak otomatis, tekan tombol <strong>"Tambah ke Minecraft"</strong> di bawah.</p>
-
-    <div class="actions">
-      <a id="openLink" class="btn" href="#">Tambah ke Minecraft</a>
-      <button id="retry" class="btn" type="button">Coba Lagi</button>
-    </div>
-
-    <hr style="margin:18px 0;border:none;border-top:1px solid rgba(255,255,255,.08)" />
-
-    <p class="small">Detail server:</p>
-    <p class="small"><strong>Nama:</strong> <code id="srvName"></code> · <strong>Alamat:</strong> <code id="srvAddr"></code> · <strong>Port:</strong> <code id="srvPort"></code></p>
-
-    <details style="margin-top:8px">
-      <summary class="small">Tidak bekerja?</summary>
-      <p class="small">Pastikan Minecraft Bedrock terpasang di perangkat ini. Fitur <em>addExternalServer</em> tidak didukung pada beberapa konsol. Sebagai alternatif, buka Minecraft → <em>Play</em> → <em>Servers</em> → <em>Add Server</em> dan masukkan detail di atas secara manual.</p>
-    </details>
-  </main>
+  <div class="loading">
+    <div class="spinner"></div>
+    <p>Mengarahkan ke Minecraft...</p>
+  </div>
 
   <script>
     // ====== KONFIGURASI SERVER ======
-<!doctype html>
-<html lang="id">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tambah Server Minecraft Bedrock Otomatis</title>
-  <meta name="description" content="Kunjungi halaman ini untuk menambahkan server Minecraft Bedrock ke daftar Servers secara otomatis." />
-  <style>
-    :root{--bg:#0b1220;--fg:#e7eefc;--muted:#9fb3d9;--card:#111a2e;--accent:#6aa6ff}
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{margin:0;display:grid;place-items:center;background:radial-gradient(1200px 600px at 10% 10%,#0e1a33,transparent),
-         radial-gradient(900px 500px at 90% 20%,#0b2440,transparent),var(--bg);color:var(--fg);font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif}
-    .card{width:min(680px,92vw);background:linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02));
-          border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:24px 22px;box-shadow:0 10px 30px rgba(6,12,24,.4)}
-    h1{margin:0 0 6px;font-size:clamp(20px,3vw,28px)}
-    p{margin:8px 0;color:var(--muted);line-height:1.5}
-    code{background:#0c1730;border:1px solid rgba(255,255,255,.08);padding:.25em .45em;border-radius:8px;color:#d6e4ff}
-    .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
-    .btn{appearance:none;cursor:pointer;border:1px solid rgba(255,255,255,.14);padding:12px 16px;border-radius:12px;font-weight:600;color:var(--fg);
-         background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02));
-         box-shadow:0 8px 20px rgba(0,0,0,.35);text-decoration:none;display:inline-flex;align-items:center;gap:8px}
-    .btn:hover{border-color:rgba(255,255,255,.22)}
-    .small{font-size:12px;opacity:.9}
-    .success{color:#b7ffbf}
-    .hidden{display:none}
-  </style>
-</head>
-<body>
-  <main class="card" role="main">
-    <h1>Menambahkan Server ke Minecraft Bedrock…</h1>
-    <p id="status">Jika tidak otomatis, tekan tombol <strong>"Tambah ke Minecraft"</strong> di bawah.</p>
-
-    <div class="actions">
-      <a id="openLink" class="btn" href="#">Tambah ke Minecraft</a>
-      <button id="retry" class="btn" type="button">Coba Lagi</button>
-    </div>
-
-    <hr style="margin:18px 0;border:none;border-top:1px solid rgba(255,255,255,.08)" />
-
-    <p class="small">Detail server:</p>
-    <p class="small"><strong>Nama:</strong> <code id="srvName"></code> · <strong>Alamat:</strong> <code id="srvAddr"></code> · <strong>Port:</strong> <code id="srvPort"></code></p>
-
-    <details style="margin-top:8px">
-      <summary class="small">Tidak bekerja?</summary>
-      <p class="small">Pastikan Minecraft Bedrock terpasang di perangkat ini. Fitur <em>addExternalServer</em> tidak didukung pada beberapa konsol. Sebagai alternatif, buka Minecraft → <em>Play</em> → <em>Servers</em> → <em>Add Server</em> dan masukkan detail di atas secara manual.</p>
-    </details>
-  </main>
-
-  <script>
-    // ====== KONFIGURASI SERVER ======
-    const SERVER_NAME = "My Cool Server";   // ganti sesuai kebutuhan
-    const SERVER_ADDR = "play.example.com"; // ganti sesuai kebutuhan
-    const SERVER_PORT = 19132;              // ganti sesuai kebutuhan
+    const SERVER_NAME = "My Cool Server";
+    const SERVER_ADDR = "193.176.28.106";
+    const SERVER_PORT = 30037;
     // =================================
 
-    // Tampilkan detail di UI
-    document.getElementById('srvName').textContent = SERVER_NAME;
-    document.getElementById('srvAddr').textContent = SERVER_ADDR;
-    document.getElementById('srvPort').textContent = SERVER_PORT;
+    // Bangun URI deep link Bedrock
+    const buildUri = (scheme = 'minecraft') => 
+      `${scheme}://?addExternalServer=${encodeURIComponent(SERVER_NAME)}|${SERVER_ADDR}:${SERVER_PORT}`;
 
-    // Bangun URI deep link Bedrock: minecraft://?addExternalServer=Nama|alamat:port
-    const buildUri = (scheme = 'minecraft') => `${scheme}://?addExternalServer=${encodeURIComponent(SERVER_NAME)}|${SERVER_ADDR}:${SERVER_PORT}`;
-
-    // Coba buka lewat beberapa cara agar kompatibel di berbagai browser/perangkat
-    function openMinecraft() {
+    // Fungsi redirect langsung
+    function redirectToMinecraft() {
       const uri = buildUri('minecraft');
-      const fallbackUri = buildUri('minecraftpe'); // skema lama di beberapa perangkat
+      const fallbackUri = buildUri('minecraftpe');
 
-      // 1) Coba set location langsung
-      let opened = false;
+      // Coba redirect utama
       try {
-        window.location.href = uri; opened = true;
-      } catch (e) {}
+        window.location.replace(uri);
+      } catch (e) {
+        // Fallback dengan skema lama
+        setTimeout(() => {
+          window.location.replace(fallbackUri);
+        }, 500);
+      }
 
-      // 2) Coba via iframe tersembunyi sebagai cadangan
+      // Backup menggunakan iframe tersembunyi
       setTimeout(() => {
-        if (document.visibilityState === 'visible') {
-          const iframe = document.createElement('iframe');
-          iframe.style.display = 'none';
-          iframe.src = uri;
-          document.body.appendChild(iframe);
-        }
-      }, 150);
-
-      // 3) Jika masih gagal (app tidak menangkap skema), coba skema lama
-      setTimeout(() => {
-        if (document.visibilityState === 'visible') {
-          window.location.href = fallbackUri;
-        }
-      }, 700);
-
-      // Update status UI
-      const status = document.getElementById('status');
-      status.innerHTML = 'Mencoba membuka Minecraft dan menambahkan server…';
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.src = uri;
+        document.body.appendChild(iframe);
+        
+        // Hapus iframe setelah beberapa detik
+        setTimeout(() => {
+          if (iframe.parentNode) {
+            iframe.parentNode.removeChild(iframe);
+          }
+        }, 3000);
+      }, 200);
     }
 
-    // Tombol manual
-    document.getElementById('openLink').addEventListener('click', (e) => {
-      e.preventDefault();
-      openMinecraft();
+    // Jalankan redirect segera setelah DOM dimuat
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(redirectToMinecraft, 100);
     });
-    document.getElementById('retry').addEventListener('click', openMinecraft);
 
-    // Link tombol utama diarahkan ke skema, agar bisa ditekan manual jika perlu
-    document.getElementById('openLink').href = buildUri('minecraft');
-
-    // Jalankan otomatis saat halaman dimuat
-    window.addEventListener('load', () => {
-      setTimeout(openMinecraft, 400);
-    });
-  </script>
-</body>
-</html>
-    const SERVER_ADDR = "193.176.28.106"; // ganti sesuai kebutuhan
-    const SERVER_PORT = 30037;              // ganti sesuai kebutuhan
-    // =================================
-
-    // Tampilkan detail di UI
-    document.getElementById('srvName').textContent = SERVER_NAME;
-    document.getElementById('srvAddr').textContent = SERVER_ADDR;
-    document.getElementById('srvPort').textContent = SERVER_PORT;
-
-    // Bangun URI deep link Bedrock: minecraft://?addExternalServer=Nama|alamat:port
-    const buildUri = (scheme = 'minecraft') => `${scheme}://?addExternalServer=${encodeURIComponent(SERVER_NAME)}|${SERVER_ADDR}:${SERVER_PORT}`;
-
-    // Coba buka lewat beberapa cara agar kompatibel di berbagai browser/perangkat
-    function openMinecraft() {
-      const uri = buildUri('minecraft');
-      const fallbackUri = buildUri('minecraftpe'); // skema lama di beberapa perangkat
-
-      // 1) Coba set location langsung
-      let opened = false;
-      try {
-        window.location.href = uri; opened = true;
-      } catch (e) {}
-
-      // 2) Coba via iframe tersembunyi sebagai cadangan
-      setTimeout(() => {
-        if (document.visibilityState === 'visible') {
-          const iframe = document.createElement('iframe');
-          iframe.style.display = 'none';
-          iframe.src = uri;
-          document.body.appendChild(iframe);
-        }
-      }, 150);
-
-      // 3) Jika masih gagal (app tidak menangkap skema), coba skema lama
-      setTimeout(() => {
-        if (document.visibilityState === 'visible') {
-          window.location.href = fallbackUri;
-        }
-      }, 700);
-
-      // Update status UI
-      const status = document.getElementById('status');
-      status.innerHTML = 'Mencoba membuka Minecraft dan menambahkan server…';
+    // Backup jika DOMContentLoaded sudah lewat
+    if (document.readyState === 'loading') {
+      // DOM masih loading, event listener sudah dipasang
+    } else {
+      // DOM sudah siap
+      setTimeout(redirectToMinecraft, 100);
     }
 
-    // Tombol manual
-    document.getElementById('openLink').addEventListener('click', (e) => {
-      e.preventDefault();
-      openMinecraft();
-    });
-    document.getElementById('retry').addEventListener('click', openMinecraft);
-
-    // Link tombol utama diarahkan ke skema, agar bisa ditekan manual jika perlu
-    document.getElementById('openLink').href = buildUri('minecraft');
-
-    // Jalankan otomatis saat halaman dimuat
-    window.addEventListener('load', () => {
-      setTimeout(openMinecraft, 400);
-    });
+    // Fallback terakhir jika semua gagal - redirect setelah 3 detik
+    setTimeout(() => {
+      if (document.visibilityState === 'visible') {
+        redirectToMinecraft();
+      }
+    }, 3000);
   </script>
 </body>
 </html>
